@@ -13,13 +13,18 @@
     body{margin:0;background:radial-gradient(ellipse at 50% -15%,#25205a 0,transparent 45%),var(--bg);color:var(--text);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;min-height:100vh}
     a{color:inherit;text-decoration:none}
     .nav{width:min(1120px,92%);margin:auto;display:flex;align-items:center;justify-content:space-between;padding:22px 0}
-    .brand{font-size:1.05rem;font-weight:850;letter-spacing:.12em}.brand span{color:var(--cyan)}
+    .brand{display:flex;align-items:center;gap:10px;font-size:1.05rem;font-weight:850;letter-spacing:.12em}
+    .brand-mark{width:25px;height:25px;border-radius:8px;background:linear-gradient(135deg,#42e8ff,#9c72ff);display:grid;place-items:center;color:#080914;font-size:.9rem;box-shadow:0 0 20px #42e8ff25}
+    .brand span:last-child{color:var(--cyan)}
     .nav-link{font-size:.9rem;color:var(--muted)}
-    .hero{width:min(1000px,92%);margin:32px auto 0;text-align:center;padding:28px 0 84px}
+    .hero{position:relative;isolation:isolate;overflow:hidden;width:min(1000px,92%);margin:25px auto 0;text-align:center;padding:35px 0 84px}
+    .hero:before{content:"";position:absolute;z-index:-1;left:50%;top:70px;transform:translateX(-50%);width:min(700px,100%);height:340px;background:radial-gradient(ellipse,#28245d66 0%,#12142a35 42%,transparent 72%);pointer-events:none}
     .eyebrow{display:inline-flex;align-items:center;gap:9px;padding:8px 13px;border:1px solid #353354;border-radius:999px;color:#d5d5f2;background:#111126;font-size:.78rem;letter-spacing:.12em;text-transform:uppercase}
     .dot{width:7px;height:7px;background:var(--cyan);border-radius:50%;box-shadow:0 0 14px var(--cyan)}
-    .logo{display:block;width:min(340px,78vw);height:auto;max-height:270px;object-fit:contain;margin:22px auto 0;filter:drop-shadow(0 0 32px #755bff25)}
-    h1{font-size:clamp(2.65rem,8vw,5.9rem);line-height:.98;letter-spacing:-.065em;margin:8px 0 20px;font-weight:900}
+    .logo-stage{position:relative;width:min(520px,92%);margin:12px auto 2px;padding:0 20px;display:flex;align-items:center;justify-content:center}
+    .logo-stage:before{content:"";position:absolute;inset:18% 12%;border-radius:50%;background:linear-gradient(90deg,#42e8ff18,#a66bff22);filter:blur(32px);pointer-events:none}
+    .logo{position:relative;display:block;width:min(390px,100%);height:auto;max-height:220px;object-fit:contain;mix-blend-mode:screen;filter:drop-shadow(0 0 14px #42e8ff20) drop-shadow(0 0 26px #9c72ff28)}
+    h1{font-size:clamp(2.65rem,8vw,5.9rem);line-height:.98;letter-spacing:-.065em;margin:0 0 20px;font-weight:900}
     h1 span{background:linear-gradient(100deg,var(--cyan),#9b91ff 55%,var(--purple));-webkit-background-clip:text;background-clip:text;color:transparent}
     .intro{max-width:610px;margin:0 auto;color:var(--muted);font-size:clamp(1rem,2vw,1.18rem);line-height:1.8}
     .actions{display:flex;justify-content:center;gap:13px;flex-wrap:wrap;margin:30px 0 20px}
@@ -41,19 +46,19 @@
     .banner h2{margin:0 0 10px;font-size:clamp(1.5rem,4vw,2.25rem)}
     .banner p{color:var(--muted);margin:0}
     footer{border-top:1px solid #202239;padding:23px 4%;display:flex;gap:12px;justify-content:space-between;flex-wrap:wrap;color:#777d9a;font-size:.8rem}
-    @media(max-width:700px){.hero{padding-top:15px}.grid{grid-template-columns:1fr}.feature{min-height:auto}.features{margin-bottom:55px}.banner{padding:25px 18px}footer{justify-content:center;text-align:center}.logo{max-height:220px}}
+    @media(max-width:700px){.hero{padding-top:18px}.grid{grid-template-columns:1fr}.feature{min-height:auto}.features{margin-bottom:55px}.banner{padding:25px 18px}footer{justify-content:center;text-align:center}.logo-stage{margin-top:10px}.logo{max-height:175px}.hero{margin-top:10px}}
     @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.btn{transition:none}}
   </style>
 </head>
 <body>
   <header class="nav">
-    <a class="brand" href="#" aria-label="ODRIVOX Audio home">ODRIVOX<span>.</span></a>
+    <a class="brand" href="#" aria-label="ODRIVOX Audio home"><span class="brand-mark" aria-hidden="true">〰</span> ODRIVOX<span>.</span></a>
     <a class="nav-link" href="#features">Explore features ↘</a>
   </header>
   <main>
     <section class="hero">
       <div class="eyebrow"><span class="dot"></span> Your sound starts here</div>
-      <img class="logo" src="ODRIVOX.png" alt="ODRIVOX Audio glowing waveform logo">
+      <div class="logo-stage"><img class="logo" src="ODRIVOX.png" alt="ODRIVOX Audio glowing waveform logo"></div>
       <h1>Make every sound<br><span>yours.</span></h1>
       <p class="intro">A new space for your audio ideas. Capture the moment, shape the sound, and turn your creativity into something unforgettable.</p>
       <div class="actions">
