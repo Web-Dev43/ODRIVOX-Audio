@@ -21,9 +21,28 @@
     .hero:before{content:"";position:absolute;z-index:-1;left:50%;top:70px;transform:translateX(-50%);width:min(700px,100%);height:340px;background:radial-gradient(ellipse,#28245d66 0%,#12142a35 42%,transparent 72%);pointer-events:none}
     .eyebrow{display:inline-flex;align-items:center;gap:9px;padding:8px 13px;border:1px solid #353354;border-radius:999px;color:#d5d5f2;background:#111126;font-size:.78rem;letter-spacing:.12em;text-transform:uppercase}
     .dot{width:7px;height:7px;background:var(--cyan);border-radius:50%;box-shadow:0 0 14px var(--cyan)}
-    .logo-stage{position:relative;width:min(440px,88%);margin:12px auto 2px;padding:0;display:flex;align-items:center;justify-content:center}
-    .logo-stage:before{content:"";position:absolute;inset:12% 5%;border-radius:50%;background:radial-gradient(ellipse, #302c79a8 0%,#18264b75 38%,transparent 72%);filter:blur(34px);pointer-events:none}
-    .logo{position:relative;display:block;width:min(360px,100%);height:auto;max-height:205px;object-fit:contain;mix-blend-mode:screen;filter:brightness(1.12) saturate(1.08) drop-shadow(0 0 18px #42e8ff28) drop-shadow(0 0 34px #9c72ff30);-webkit-mask-image:radial-gradient(ellipse 72% 70% at center, #000 52%, rgba(0,0,0,.92) 67%, transparent 100%);mask-image:radial-gradient(ellipse 72% 70% at center, #000 52%, rgba(0,0,0,.92) 67%, transparent 100%)}
+    .logo-stage{position:relative;width:min(390px,82%);margin:10px auto 0;padding:0;display:flex;align-items:center;justify-content:center}
+    .logo-stage:before{content:"";position:absolute;inset:-12% -18%;border-radius:50%;background:radial-gradient(ellipse,#39317b88 0%,#1b27545c 43%,transparent 72%);filter:blur(32px);pointer-events:none}
+    .logo{position:relative;display:block;width:min(330px,100%);height:auto;max-height:190px;object-fit:contain;mix-blend-mode:lighten;filter:brightness(1.06) saturate(1.08) drop-shadow(0 0 18px #42e8ff25) drop-shadow(0 0 28px #9c72ff2c)}
+    .feed-section{width:min(1000px,92%);margin:0 auto 58px}
+    .feed-heading{display:flex;align-items:end;justify-content:space-between;gap:16px;margin-bottom:18px}
+    .feed-heading h2{font-size:clamp(1.35rem,4vw,1.9rem);letter-spacing:-.04em;margin:0 0 5px}
+    .feed-heading p{color:var(--muted);margin:0;font-size:.9rem}
+    .quiet-link{font-size:.82rem;color:var(--cyan);white-space:nowrap}
+    .quick-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+    .quick-card{display:flex;align-items:center;gap:13px;text-align:left;padding:18px;border:1px solid #2c3050;border-radius:17px;background:linear-gradient(145deg,#171a31,#0e1020);min-height:100px}
+    .quick-icon{width:42px;height:42px;flex:0 0 42px;display:grid;place-items:center;border-radius:13px;background:linear-gradient(135deg,#42e8ff24,#a66bff35);font-size:1.35rem}
+    .quick-card strong{display:block;font-size:.95rem;margin-bottom:5px}
+    .quick-card small{color:var(--muted);font-size:.78rem;line-height:1.4}
+    .horizontal-row{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(220px,1fr);grid-auto-columns: minmax(220px, 30%);gap:14px;overflow-x:auto;padding:2px 2px 14px;scroll-snap-type:x mandatory;scrollbar-width:thin;scrollbar-color:#37345f transparent}
+    .discover-card{scroll-snap-align:start;min-height:190px;position:relative;overflow:hidden;border:1px solid #292c49;border-radius:18px;padding:20px;background:radial-gradient(ellipse at 90% 0%,#5e46a94c,transparent 55%),linear-gradient(145deg,#171a31,#0d1020)}
+    .discover-card:nth-child(2){background:radial-gradient(ellipse at 90% 0%,#197d9c4a,transparent 55%),linear-gradient(145deg,#171a31,#0d1020)}
+    .discover-card:nth-child(3){background:radial-gradient(ellipse at 90% 0%,#8b4ac34a,transparent 55%),linear-gradient(145deg,#171a31,#0d1020)}
+    .card-symbol{font-size:1.7rem;margin-bottom:20px;color:var(--cyan)}
+    .discover-card h3{margin:0 0 8px;font-size:1.05rem}
+    .discover-card p{margin:0;color:var(--muted);font-size:.85rem;line-height:1.55}
+    .coming{display:inline-block;margin-top:13px;padding:5px 8px;border-radius:7px;background:#ffffff0b;color:#b7bad3;font-size:.68rem;letter-spacing:.06em;text-transform:uppercase}
+
     h1{font-size:clamp(2.65rem,8vw,5.9rem);line-height:.98;letter-spacing:-.065em;margin:0 0 20px;font-weight:900}
     h1 span{background:linear-gradient(100deg,var(--cyan),#9b91ff 55%,var(--purple));-webkit-background-clip:text;background-clip:text;color:transparent}
     .intro{max-width:610px;margin:0 auto;color:var(--muted);font-size:clamp(1rem,2vw,1.18rem);line-height:1.8}
@@ -46,7 +65,7 @@
     .banner h2{margin:0 0 10px;font-size:clamp(1.5rem,4vw,2.25rem)}
     .banner p{color:var(--muted);margin:0}
     footer{border-top:1px solid #202239;padding:23px 4%;display:flex;gap:12px;justify-content:space-between;flex-wrap:wrap;color:#777d9a;font-size:.8rem}
-    @media(max-width:700px){.logo-stage{width:min(350px,84%);margin:8px auto 0}.logo{max-height:165px}.hero{padding-top:18px}.grid{grid-template-columns:1fr}.feature{min-height:auto}.features{margin-bottom:55px}.banner{padding:25px 18px}footer{justify-content:center;text-align:center}.logo-stage{margin-top:10px}.logo{max-height:175px}.hero{margin-top:10px}}
+    @media(max-width:700px){.logo-stage{width:min(330px,82%);margin:8px auto 0}.logo{max-height:160px}.hero{padding-top:18px;margin-top:10px;padding-bottom:56px}.quick-grid{grid-template-columns:1fr}.quick-card{min-height:82px;padding:14px}.horizontal-row{grid-auto-columns:minmax(220px,76%)}.feed-section{margin-bottom:44px}.feed-heading{align-items:start}.grid{grid-template-columns:1fr}.feature{min-height:auto}.features{margin-bottom:55px}.banner{padding:25px 18px}footer{justify-content:center;text-align:center}}
     @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.btn{transition:none}}
   </style>
 </head>
@@ -67,7 +86,31 @@
       </div>
       <p class="note">A new audio workspace is in the making.</p>
     </section>
-    <section class="features" id="features">
+    <section class="feed-section" aria-labelledby="start-title">
+      <div class="feed-heading"><div><h2 id="start-title">Start creating</h2><p>Your next idea is one click away.</p></div><span class="quiet-link">Your workspace ↗</span></div>
+      <div class="quick-grid">
+        <article class="quick-card"><span class="quick-icon">🎙️</span><span><strong>Record audio</strong><small>Capture a voice or idea</small></span></article>
+        <article class="quick-card"><span class="quick-icon">↥</span><span><strong>Import a file</strong><small>Bring in audio to work on</small></span></article>
+        <article class="quick-card"><span class="quick-icon">✦</span><span><strong>New project</strong><small>Start with a blank canvas</small></span></article>
+      </div>
+    </section>
+    <section class="feed-section" id="features">
+      <div class="feed-heading"><div><h2>Explore audio tools</h2><p>Tools to help shape your sound.</p></div><span class="quiet-link">Explore ↗</span></div>
+      <div class="horizontal-row">
+        <article class="discover-card"><div class="card-symbol">〰</div><h3>Audio editor</h3><p>Trim, arrange, and layer clips on a timeline.</p><span class="coming">In development</span></article>
+        <article class="discover-card"><div class="card-symbol">✧</div><h3>Clean up audio</h3><p>Reduce unwanted noise and make voices clearer.</p><span class="coming">Planned</span></article>
+        <article class="discover-card"><div class="card-symbol">♫</div><h3>Effects &amp; sound</h3><p>Experiment with effects and shape your sound.</p><span class="coming">Planned</span></article>
+      </div>
+    </section>
+    <section class="feed-section">
+      <div class="feed-heading"><div><h2>Find your starting point</h2><p>Ideas and templates for different kinds of audio.</p></div></div>
+      <div class="horizontal-row">
+        <article class="discover-card"><div class="card-symbol">🎧</div><h3>Podcast &amp; voice</h3><p>A clean place to shape speech and narration.</p><span class="coming">Template idea</span></article>
+        <article class="discover-card"><div class="card-symbol">♪</div><h3>Music sketch</h3><p>Bring clips together and explore an arrangement.</p><span class="coming">Template idea</span></article>
+        <article class="discover-card"><div class="card-symbol">◉</div><h3>Sound experiment</h3><p>Try effects and discover a new direction.</p><span class="coming">Template idea</span></article>
+      </div>
+    </section>
+    <section class="features">
       <div class="section-head">
         <h2>Built around your sound.</h2>
         <p>The tools we're working toward, all in one creative space.</p>
