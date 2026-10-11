@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#080914">
+  <meta name="description" content="ODRIVOX Audio — Record. Edit. Transform. Your sound, your way.">
+  <title>ODRIVOX Audio — Record. Edit. Transform.</title>
+  <style>
+    :root{color-scheme:dark;--bg:#080914;--panel:#101224;--text:#f5f6ff;--muted:#a5a9c3;--cyan:#42e8ff;--purple:#a66bff}
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{margin:0;background:radial-gradient(ellipse at 50% -15%,#25205a 0,transparent 45%),var(--bg);color:var(--text);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;min-height:100vh}
+    a{color:inherit;text-decoration:none}
+    .nav{width:min(1120px,92%);margin:auto;display:flex;align-items:center;justify-content:space-between;padding:22px 0}
+    .brand{font-size:1.05rem;font-weight:850;letter-spacing:.12em}.brand span{color:var(--cyan)}
+    .nav-link{font-size:.9rem;color:var(--muted)}
+    .hero{width:min(1000px,92%);margin:32px auto 0;text-align:center;padding:28px 0 84px}
+    .eyebrow{display:inline-flex;align-items:center;gap:9px;padding:8px 13px;border:1px solid #353354;border-radius:999px;color:#d5d5f2;background:#111126;font-size:.78rem;letter-spacing:.12em;text-transform:uppercase}
+    .dot{width:7px;height:7px;background:var(--cyan);border-radius:50%;box-shadow:0 0 14px var(--cyan)}
+    .logo{display:block;width:min(340px,78vw);height:auto;max-height:270px;object-fit:contain;margin:22px auto 0;filter:drop-shadow(0 0 32px #755bff25)}
+    h1{font-size:clamp(2.65rem,8vw,5.9rem);line-height:.98;letter-spacing:-.065em;margin:8px 0 20px;font-weight:900}
+    h1 span{background:linear-gradient(100deg,var(--cyan),#9b91ff 55%,var(--purple));-webkit-background-clip:text;background-clip:text;color:transparent}
+    .intro{max-width:610px;margin:0 auto;color:var(--muted);font-size:clamp(1rem,2vw,1.18rem);line-height:1.8}
+    .actions{display:flex;justify-content:center;gap:13px;flex-wrap:wrap;margin:30px 0 20px}
+    .btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;border-radius:13px;padding:14px 21px;font-weight:750;font-size:.95rem;transition:transform .2s,border-color .2s}
+    .btn:hover{transform:translateY(-2px)}
+    .primary{color:#071018;background:linear-gradient(100deg,var(--cyan),#b7a1ff);box-shadow:0 8px 35px #58dfff24}
+    .secondary{border:1px solid #353750;background:#111222;color:var(--text)}
+    .note{font-size:.78rem;color:#7e839f}
+    .features{width:min(1000px,92%);margin:0 auto 80px}
+    .section-head{text-align:center;margin-bottom:25px}
+    .section-head h2{font-size:clamp(1.8rem,4vw,2.6rem);letter-spacing:-.04em;margin:0 0 10px}
+    .section-head p{color:var(--muted);margin:0}
+    .grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:15px}
+    .feature{background:linear-gradient(145deg,#14162b,#0e1020);border:1px solid #292b46;border-radius:18px;padding:24px;min-height:170px}
+    .icon{font-size:1.55rem;margin-bottom:16px}
+    .feature h3{margin:0 0 9px;font-size:1.05rem}
+    .feature p{margin:0;color:var(--muted);font-size:.9rem;line-height:1.65}
+    .banner{width:min(1000px,92%);margin:0 auto 72px;padding:30px;border-radius:22px;border:1px solid #363052;background:linear-gradient(110deg,#171d35,#211637 75%,#151126);text-align:center}
+    .banner h2{margin:0 0 10px;font-size:clamp(1.5rem,4vw,2.25rem)}
+    .banner p{color:var(--muted);margin:0}
+    footer{border-top:1px solid #202239;padding:23px 4%;display:flex;gap:12px;justify-content:space-between;flex-wrap:wrap;color:#777d9a;font-size:.8rem}
+    @media(max-width:700px){.hero{padding-top:15px}.grid{grid-template-columns:1fr}.feature{min-height:auto}.features{margin-bottom:55px}.banner{padding:25px 18px}footer{justify-content:center;text-align:center}.logo{max-height:220px}}
+    @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.btn{transition:none}}
+  </style>
+</head>
+<body>
+  <header class="nav">
+    <a class="brand" href="#" aria-label="ODRIVOX Audio home">ODRIVOX<span>.</span></a>
+    <a class="nav-link" href="#features">Explore features ↘</a>
+  </header>
+  <main>
+    <section class="hero">
+      <div class="eyebrow"><span class="dot"></span> Your sound starts here</div>
+      <img class="logo" src="ODRIVOX.png" alt="ODRIVOX Audio glowing waveform logo">
+      <h1>Make every sound<br><span>yours.</span></h1>
+      <p class="intro">A new space for your audio ideas. Capture the moment, shape the sound, and turn your creativity into something unforgettable.</p>
+      <div class="actions">
+        <a class="btn primary" href="#features">Discover ODRIVOX <span aria-hidden="true">→</span></a>
+        <a class="btn secondary" href="#vision">Our vision</a>
+      </div>
+      <p class="note">A new audio workspace is in the making.</p>
+    </section>
+    <section class="features" id="features">
+      <div class="section-head">
+        <h2>Built around your sound.</h2>
+        <p>The tools we're working toward, all in one creative space.</p>
+      </div>
+      <div class="grid">
+        <article class="feature"><div class="icon" aria-hidden="true">🎙️</div><h3>Record</h3><p>Capture voice, ideas, and audio straight from your browser.</p></article>
+        <article class="feature"><div class="icon" aria-hidden="true">〰️</div><h3>Edit with control</h3><p>Shape clips on a timeline and bring your tracks together with precision.</p></article>
+        <article class="feature"><div class="icon" aria-hidden="true">✦</div><h3>Transform</h3><p>Explore effects and smarter audio tools to help your sound stand out.</p></article>
+      </div>
+    </section>
+    <section class="banner" id="vision">
+      <h2>Record. Edit. Transform.</h2>
+      <p>Your ideas deserve to sound as good as they feel. Let's build it.</p>
+    </section>
+  </main>
+  <footer><span>© <span id="year"></span> ODRIVOX Audio</span><span>Made for people with something to say.</span></footer>
+  <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+</body>
+</html>
