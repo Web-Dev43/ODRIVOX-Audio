@@ -93,12 +93,12 @@ main{max-width:1500px;margin:auto;padding:22px clamp(12px,2.5vw,30px) 110px}.int
     updatePlayheads();
   }
   function applyGain(t) { if(t.gain&&ctx) t.gain.gain.setTargetAtTime(t.muted?0:t.volume,ctx.currentTime,.015); }
-  function stopSources() { for(const s of sources){try{s.stop();}catch(e){}try{s.disconnect();}catch(e){}} sources=[]; }
+  function stopSources() { for(const s of sources){try{s.stop();}catch(e){}try{s.disconnect();}catch(e){}} sources=[]; tracks.forEach(t=>{t.gain=null;}); }
   async function play() {
     if(!tracks.length)return;
     try{ensureAudio();await ctx.resume();if(playing){position=Math.min(duration,ctx.currentTime-startedAt+startOffset);stopSources();playing=false;cancelAnimationFrame(raf);setControls();updateTime();updatePlayheads();return;}
       if(position>=duration)position=0;stopSources();sources=[];startOffset=position;startedAt=ctx.currentTime;playing=true;
-      tracks.forEach(t=>{if(position>=t.buffer.duration)return;const src=ctx.createBufferSource();const gain=ctx.createGain();gain.gain.value=t.muted?0:t.volume;src.buffer=t.buffer;src.connect(gain);gain.connect(master);src.start(ctx.currentTime,position,Math.max(0,t.buffer.duration-position));sources.push(src);});
+      tracks.forEach(t=>{if(position>=t.buffer.duration)return;const src=ctx.createBufferSource();const gain=ctx.createGain();gain.gain.value=t.muted?0:t.volume;src.buffer=t.buffer;src.connect(gain);gain.connect(master);t.gain=gain;src.start(ctx.currentTime,position,Math.max(0,t.buffer.duration-position));sources.push(src);});
       setControls();tick();
     }catch(e){playing=false;setControls();notify(e.message||'Could not start audio playback.');}
   }
