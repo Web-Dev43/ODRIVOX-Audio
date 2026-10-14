@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#080914">
+<meta name="description" content="ODRIVOX Studio — local multitrack audio playback and waveform foundation.">
+<title>ODRIVOX Studio — Audio Foundation</title>
+<style>
+:root{color-scheme:dark;--bg:#080914;--panel:#101224;--panel2:#15182d;--line:#292d4c;--text:#f5f6ff;--muted:#a5a9c3;--cyan:#42e8ff;--violet:#a66bff;--green:#77f2c1;--danger:#ff728d}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 50% -20%,#242052 0,transparent 43%),var(--bg);color:var(--text);font:14px/1.45 Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;min-height:100vh}
+button,input{font:inherit}button{cursor:pointer;color:var(--text);border:1px solid var(--line);background:#171a31;border-radius:11px;padding:10px 13px;font-weight:650}button:focus-visible,input:focus-visible{outline:2px solid var(--cyan);outline-offset:2px}button:disabled{opacity:.4;cursor:not-allowed}.primary{background:linear-gradient(105deg,var(--cyan),#b7a1ff);color:#071018;border:0}.quiet{background:transparent}.danger{color:#ff9cad}.topbar{height:66px;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:0 clamp(14px,3vw,30px);border-bottom:1px solid #252842;background:#090a18dd;position:sticky;top:0;z-index:5;backdrop-filter:blur(18px)}.brand{display:flex;align-items:center;gap:10px;font-weight:900;letter-spacing:.12em}.brand-mark{width:31px;height:31px;display:grid;place-items:center;border-radius:10px;color:#071018;background:linear-gradient(135deg,var(--cyan),var(--violet));font-size:20px}.brand small{display:block;color:var(--muted);font-weight:500;letter-spacing:0;font-size:11px}.top-actions{display:flex;gap:8px;align-items:center}.status{font-size:12px;color:var(--green);display:flex;gap:7px;align-items:center}.status:before{content:"";width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 12px #77f2c177}
+main{max-width:1500px;margin:auto;padding:22px clamp(12px,2.5vw,30px) 110px}.intro{display:flex;justify-content:space-between;gap:20px;align-items:end;margin:4px 0 20px}.eyebrow{color:var(--cyan);text-transform:uppercase;font-size:11px;letter-spacing:.16em;font-weight:800}.intro h1{font-size:clamp(27px,4vw,42px);letter-spacing:-.055em;line-height:1.05;margin:8px 0}.intro p{color:var(--muted);margin:0;max-width:650px}.local-note{border:1px solid #315a65;background:#0d2029;color:#b9f5ff;border-radius:12px;padding:10px 12px;font-size:12px;max-width:250px}
+.toolbar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;padding:12px;background:#101224;border:1px solid var(--line);border-radius:16px 16px 0 0}.toolbar .spacer{flex:1}.transport{display:flex;gap:8px;align-items:center}.time-readout{font-variant-numeric:tabular-nums;font-size:17px;font-weight:800;min-width:100px;text-align:center}.tool-label{color:var(--muted);font-size:11px;margin-right:2px}.workspace{border:1px solid var(--line);border-top:0;border-radius:0 0 16px 16px;overflow:hidden;background:#0d0f1e}.ruler-row{display:grid;grid-template-columns:190px minmax(0,1fr);border-bottom:1px solid var(--line);background:#111326}.ruler-label{padding:11px 14px;color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.1em;border-right:1px solid var(--line)}.ruler{position:relative;height:38px;overflow:hidden;background-image:linear-gradient(to right,#343754 1px,transparent 1px);background-size:100px 100%;background-position:left bottom}.tick{position:absolute;bottom:6px;transform:translateX(5px);font-size:10px;color:#a7accb;font-variant-numeric:tabular-nums}.tracks{min-height:220px}.empty{padding:54px 18px;text-align:center}.empty-icon{font-size:32px;margin-bottom:10px}.empty h2{margin:0 0 7px;font-size:20px}.empty p{margin:0 auto 18px;max-width:420px;color:var(--muted)}.track{display:grid;grid-template-columns:190px minmax(0,1fr);min-height:118px;border-bottom:1px solid #242741}.track:last-child{border-bottom:0}.track-meta{padding:13px;border-right:1px solid var(--line);background:#111326;display:flex;flex-direction:column;gap:9px;min-width:0}.track-title{display:flex;align-items:center;gap:8px;font-weight:750;overflow-wrap:anywhere}.track-dot{width:8px;height:8px;flex:0 0 8px;border-radius:50%;background:var(--track,#42e8ff);box-shadow:0 0 10px color-mix(in srgb,var(--track,#42e8ff),transparent 55%)}.track-sub{color:var(--muted);font-size:11px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.track-controls{display:flex;align-items:center;gap:5px;flex-wrap:wrap}.mini{padding:5px 8px;border-radius:7px;font-size:10px;min-width:30px}.mini.active{border-color:var(--cyan);background:#14313a;color:#a9f7ff}.gain{width:70px;accent-color:var(--track,var(--cyan))}.wave-wrap{position:relative;min-width:0;overflow:hidden;background:repeating-linear-gradient(to bottom,transparent 0,transparent 58px,#242741 59px),#0b0d1a;touch-action:pan-y}.wave{display:block;width:100%;height:118px;cursor:crosshair}.wave-wrap:after{content:"";pointer-events:none;position:absolute;inset:0;background-image:linear-gradient(to right,#222540 1px,transparent 1px);background-size:100px 100%;opacity:.5}.playhead{position:absolute;top:0;bottom:0;left:0;width:2px;background:#fff;box-shadow:0 0 10px #fff9;z-index:3;pointer-events:none}.playhead:before{content:"";position:absolute;top:0;left:-4px;border-left:5px solid transparent;border-right:5px solid transparent;border-top:8px solid #fff}.track-actions{display:flex;gap:5px;margin-left:auto}.bottom-info{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;padding:13px 16px;color:var(--muted);font-size:11px;border-top:1px solid var(--line)}.bottom-info strong{color:var(--text)}.master{display:flex;gap:10px;align-items:center}.master input{width:90px;accent-color:var(--cyan)}.footnote{color:#7e839f;font-size:12px;margin:16px 2px}.toast{position:fixed;left:50%;bottom:94px;transform:translate(-50%,12px);opacity:0;pointer-events:none;background:#202540;border:1px solid #444a71;border-radius:12px;padding:11px 16px;z-index:20;max-width:calc(100% - 24px);transition:.18s}.toast.show{opacity:1;transform:translate(-50%,0)}.transport-dock{position:fixed;bottom:0;left:0;right:0;z-index:10;padding:10px max(14px,env(safe-area-inset-left)) calc(10px + env(safe-area-inset-bottom));background:#0c0d1bf2;border-top:1px solid #2b2f4d;backdrop-filter:blur(18px);display:flex;justify-content:center;gap:10px;align-items:center}.transport-dock button{min-width:48px}.dock-time{font-size:16px;font-weight:800;font-variant-numeric:tabular-nums;min-width:94px;text-align:center}.kbd{font-size:10px;color:var(--muted);border:1px solid #414563;border-radius:5px;padding:1px 5px}
+@media(max-width:700px){.topbar{height:58px}.top-actions .status{display:none}main{padding-top:18px}.intro{display:block}.local-note{margin-top:12px;max-width:none}.ruler-row,.track{grid-template-columns:118px minmax(0,1fr)}.ruler-label{padding:10px 8px;font-size:9px}.track-meta{padding:9px 7px;gap:7px}.track-title{font-size:12px;align-items:flex-start}.track-sub{font-size:10px}.track-controls{gap:4px}.mini{padding:5px 6px;min-width:27px}.gain{width:55px}.wave,.track{min-height:108px}.wave{height:108px}.track{min-height:108px}.track-meta{overflow:hidden}.toolbar{padding:9px}.toolbar .wide-label{display:none}.toolbar button{padding:9px 10px}.time-readout{font-size:14px;min-width:86px}.bottom-info{font-size:10px}.transport-dock{gap:7px}.dock-time{font-size:14px;min-width:82px}.dock-label{display:none}}
+@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}
+</style>
+</head>
+<body>
+<header class="topbar">
+  <a class="brand" href="index.html" aria-label="ODRIVOX home"><span class="brand-mark" aria-hidden="true">〰</span><span>ODRIVOX<span style="color:var(--cyan)">.</span><small>STUDIO / AUDIO FOUNDATION</small></span></a>
+  <div class="top-actions"><span class="status">Local workspace</span><button id="addTop" class="primary">＋ <span class="dock-label">Add audio</span></button></div>
+</header>
+<main>
+  <section class="intro">
+    <div><div class="eyebrow">Slice 01 · Playback foundation</div><h1>Your sound, <span style="color:var(--cyan)">in sync.</span></h1><p>Import audio, see its waveform, and play multiple tracks together. Your files stay on this device; nothing is uploaded.</p></div>
+    <div class="local-note">🔒 <strong>Local by design</strong><br>Audio is decoded in your browser and stays in this session.</div>
+  </section>
+  <section aria-label="Audio workspace">
+    <div class="toolbar">
+      <div class="transport"><button id="playBtn" class="primary" disabled aria-label="Play">▶ <span class="wide-label">Play</span></button><button id="stopBtn" disabled aria-label="Stop">■ <span class="wide-label">Stop</span></button><span id="timeMain" class="time-readout">00:00.000</span></div>
+      <div class="spacer"></div>
+      <button id="zoomOut" disabled aria-label="Zoom out">−</button><span id="zoomText" class="tool-label">Fit timeline</span><button id="zoomIn" disabled aria-label="Zoom in">＋</button>
+      <button id="addAudio" class="quiet">＋ <span class="wide-label">Import audio</span></button>
+      <input id="fileInput" type="file" accept="audio/*,.wav,.mp3,.m4a,.aac,.ogg,.flac,.aiff,.aif,.opus,.webm" multiple hidden>
+    </div>
+    <div class="workspace">
+      <div class="ruler-row"><div class="ruler-label">Track / source</div><div id="ruler" class="ruler" aria-label="Timeline ruler"></div></div>
+      <div id="tracks" class="tracks">
+        <div class="empty"><div class="empty-icon">〰️</div><h2>Start with an audio file</h2><p>Choose one or more audio files. ODRIVOX will create a track for each file and line them up at the start.</p><button id="emptyImport" class="primary">＋ Import audio</button></div>
+      </div>
+      <div class="bottom-info"><span><strong id="trackCount">0 tracks</strong> · <span id="durationLabel">00:00 total</span></span><span>Click a waveform to seek · Use zoom to inspect detail</span><span class="master">Master <input id="masterGain" type="range" min="0" max="1.5" step=".01" value=".85" aria-label="Master volume"></span></div>
+    </div>
+  </section>
+  <p class="footnote">Prototype status: audio import, waveform display, synchronized playback, seeking, per-track mute/volume, master volume, and timeline zoom. Project saving, editing operations, and export come in later build slices.</p>
+</main>
+<div class="transport-dock" aria-label="Playback controls"><button id="dockPlay" class="primary" disabled aria-label="Play or pause">▶</button><button id="dockStop" disabled aria-label="Stop playback">■</button><span id="timeDock" class="dock-time">00:00.000</span><span class="tool-label">/</span><span id="durationDock" class="dock-time" style="color:var(--muted)">00:00.000</span></div>
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
+<script>
+(() => {
+  const $ = id => document.getElementById(id);
+  const palette = ['#42e8ff','#a66bff','#77f2c1','#ffb86b','#ff7aa8','#9aa9ff'];
+  let ctx = null, master = null, tracks = [], duration = 0, position = 0, zoom = 1, playing = false, startedAt = 0, startOffset = 0, sources = [], raf = 0, toastTimer = 0;
+  const fmt = n => { n = Math.max(0, Number.isFinite(n) ? n : 0); const m = Math.floor(n/60), s = Math.floor(n%60), ms = Math.floor((n%1)*1000); return String(m).padStart(2,'0')+':'+String(s).padStart(2,'0')+'.'+String(ms).padStart(3,'0'); };
+  function notify(message) { $('toast').textContent = message; $('toast').classList.add('show'); clearTimeout(toastTimer); toastTimer=setTimeout(()=>$('toast').classList.remove('show'),3000); }
+  function ensureAudio() { if(!ctx) { const AC=window.AudioContext||window.webkitAudioContext; if(!AC) throw new Error('This browser does not support Web Audio. Try a recent version of Safari.'); ctx=new AC(); master=ctx.createGain(); master.gain.value=Number($('masterGain').value); master.connect(ctx.destination); } return ctx; }
+  function totalDuration() { return Math.max(0,...tracks.map(t=>t.buffer.duration)); }
+  function updateTime() { $('timeMain').textContent=fmt(position); $('timeDock').textContent=fmt(position); $('durationDock').textContent=fmt(duration); $('durationLabel').textContent=fmt(duration)+' total'; }
+  function setControls() { const has=tracks.length>0; ['playBtn','stopBtn','dockPlay','dockStop','zoomOut','zoomIn'].forEach(id=>$(id).disabled=!has); $('playBtn').innerHTML=playing?'Ⅱ <span class="wide-label">Pause</span>':'▶ <span class="wide-label">Play</span>'; $('dockPlay').textContent=playing?'Ⅱ':'▶'; $('trackCount').textContent=tracks.length+' track'+(tracks.length===1?'':'s'); $('zoomText').textContent=zoom===1?'Fit timeline':zoom.toFixed(1)+'×'; }
+  function paintRuler() { const r=$('ruler'); r.innerHTML=''; const width=r.clientWidth||600; const visible=Math.max(1,duration/zoom); const step=visible>180?30:visible>80?10:visible>30?5:visible>12?2:1; r.style.backgroundSize=(width/(visible/step))+'px 100%'; for(let t=0;t<=visible;t+=step){const tick=document.createElement('span');tick.className='tick';tick.style.left=(t/visible*100)+'%';tick.textContent=Math.floor(t/60)+':'+String(Math.floor(t%60)).padStart(2,'0');r.appendChild(tick);} }
+  function drawWave(track) {
+    const canvas=track.canvas; if(!canvas) return;
+    const rect=canvas.getBoundingClientRect(); const dpr=Math.min(window.devicePixelRatio||1,2); const w=Math.max(1,Math.floor(rect.width*dpr)), h=Math.max(1,Math.floor(rect.height*dpr)); if(canvas.width!==w||canvas.height!==h){canvas.width=w;canvas.height=h;}
+    const g=canvas.getContext('2d'); g.clearRect(0,0,w,h); const buf=track.buffer, data=buf.getChannelData(0); const samplesPerPixel=Math.max(1,Math.floor(data.length/w)); const mid=h/2; const color=track.color;
+    g.globalAlpha=.88; g.strokeStyle=color; g.lineWidth=Math.max(1,dpr*.8); g.beginPath();
+    for(let x=0;x<w;x++){let min=1,max=-1;const a=x*samplesPerPixel,b=Math.min(data.length,a+samplesPerPixel);for(let i=a;i<b;i++){const v=data[i];if(v<min)min=v;if(v>max)max=v;}if(a>=data.length)break;g.moveTo(x,mid-max*mid*.88);g.lineTo(x,mid-min*mid*.88);}
+    g.stroke();g.globalAlpha=1;
+    if(buf.numberOfChannels>1){const data2=buf.getChannelData(1);g.strokeStyle=color;g.globalAlpha=.24;g.beginPath();for(let x=0;x<w;x+=2){const i=Math.min(data2.length-1,Math.floor(x/w*data2.length));g.moveTo(x,mid);g.lineTo(x,mid-data2[i]*mid*.75);}g.stroke();g.globalAlpha=1;}
+  }
+  function updatePlayheads() {
+    const fraction=duration?Math.min(1,position/duration):0;
+    document.querySelectorAll('.playhead').forEach(el=>el.style.left=(fraction*100)+'%');
+  }
+  function render() {
+    const host=$('tracks'); host.innerHTML='';
+    if(!tracks.length){host.innerHTML='<div class="empty"><div class="empty-icon">〰️</div><h2>Start with an audio file</h2><p>Choose one or more audio files. ODRIVOX will create a track for each file and line them up at the start.</p><button id="emptyImport2" class="primary">＋ Import audio</button></div>'; $('emptyImport2').onclick=()=> $('fileInput').click(); return;}
+    for(const t of tracks){
+      const row=document.createElement('div'); row.className='track'; row.style.setProperty('--track',t.color);
+      const meta=document.createElement('div');meta.className='track-meta';
+      const title=document.createElement('div');title.className='track-title';title.innerHTML='<span class="track-dot"></span><span></span>';title.lastChild.textContent=t.name;title.title=t.name;
+      const sub=document.createElement('div');sub.className='track-sub';sub.textContent=fmt(t.buffer.duration)+' · '+t.buffer.numberOfChannels+' ch · '+Math.round(t.buffer.sampleRate/1000*10)/10+' kHz';sub.title=t.fileName;
+      const controls=document.createElement('div');controls.className='track-controls';
+      const mute=document.createElement('button');mute.className='mini'+(t.muted?' active':'');mute.textContent='M';mute.setAttribute('aria-label','Mute '+t.name);mute.setAttribute('aria-pressed',String(t.muted));mute.onclick=()=>{t.muted=!t.muted;applyGain(t);render();};
+      const vol=document.createElement('input');vol.className='gain';vol.type='range';vol.min='0';vol.max='1.5';vol.step='.01';vol.value=t.volume;vol.setAttribute('aria-label',t.name+' volume');vol.title='Track volume';vol.oninput=()=>{t.volume=Number(vol.value);applyGain(t);};
+      const volText=document.createElement('span');volText.className='tool-label';volText.textContent=Math.round(t.volume*100)+'%';vol.oninput=()=>{t.volume=Number(vol.value);applyGain(t);volText.textContent=Math.round(t.volume*100)+'%';};
+      const remove=document.createElement('button');remove.className='mini danger';remove.textContent='×';remove.setAttribute('aria-label','Remove '+t.name);remove.title='Remove track';remove.onclick=()=>removeTrack(t.id);
+      controls.append(mute,vol,volText,remove);meta.append(title,sub,controls);
+      const waveWrap=document.createElement('div');waveWrap.className='wave-wrap';waveWrap.setAttribute('role','slider');waveWrap.setAttribute('aria-label','Seek in '+t.name);waveWrap.setAttribute('aria-valuemin','0');waveWrap.setAttribute('aria-valuemax',String(duration));waveWrap.setAttribute('aria-valuenow',String(position));waveWrap.tabIndex=0;
+      const canvas=document.createElement('canvas');canvas.className='wave';canvas.setAttribute('aria-hidden','true');t.canvas=canvas;
+      const ph=document.createElement('div');ph.className='playhead';waveWrap.append(canvas,ph);waveWrap.onclick=e=>{const rect=waveWrap.getBoundingClientRect();const fraction=Math.max(0,Math.min(1,(e.clientX-rect.left)/rect.width));seek(fraction*duration);};waveWrap.onkeydown=e=>{if(e.key==='ArrowLeft'||e.key==='ArrowRight'){e.preventDefault();seek(position+(e.key==='ArrowLeft'?-1:1));}};
+      row.append(meta,waveWrap);host.append(row);drawWave(t);
+    }
+    updatePlayheads();
+  }
+  function applyGain(t) { if(t.gain&&ctx) t.gain.gain.setTargetAtTime(t.muted?0:t.volume,ctx.currentTime,.015); }
+  function stopSources() { for(const s of sources){try{s.stop();}catch(e){}try{s.disconnect();}catch(e){}} sources=[]; }
+  async function play() {
+    if(!tracks.length)return;
+    try{ensureAudio();await ctx.resume();if(playing){position=Math.min(duration,ctx.currentTime-startedAt+startOffset);stopSources();playing=false;cancelAnimationFrame(raf);setControls();updateTime();updatePlayheads();return;}
+      if(position>=duration)position=0;stopSources();sources=[];startOffset=position;startedAt=ctx.currentTime;playing=true;
+      tracks.forEach(t=>{if(position>=t.buffer.duration)return;const src=ctx.createBufferSource();const gain=ctx.createGain();gain.gain.value=t.muted?0:t.volume;src.buffer=t.buffer;src.connect(gain);gain.connect(master);src.start(ctx.currentTime,position,Math.max(0,t.buffer.duration-position));sources.push(src);});
+      setControls();tick();
+    }catch(e){playing=false;setControls();notify(e.message||'Could not start audio playback.');}
+  }
+  function tick(){if(!playing)return;position=Math.min(duration,startOffset+(ctx.currentTime-startedAt));updateTime();updatePlayheads();if(position>=duration){playing=false;stopSources();position=duration;setControls();updateTime();updatePlayheads();return;}raf=requestAnimationFrame(tick);}
+  function pauseAtCurrent(){if(playing){position=Math.min(duration,startOffset+(ctx.currentTime-startedAt));playing=false;stopSources();cancelAnimationFrame(raf);}setControls();updateTime();updatePlayheads();}
+  async function seek(sec){const wasPlaying=playing;if(wasPlaying)pauseAtCurrent();position=Math.max(0,Math.min(duration,sec));updateTime();updatePlayheads();if(wasPlaying)await play();}
+  function removeTrack(id){const t=tracks.find(x=>x.id===id);if(!t)return;if(playing)pauseAtCurrent();tracks=tracks.filter(x=>x.id!==id);duration=totalDuration();position=Math.min(position,duration);render();paintRuler();updateTime();setControls();}
+  async function importFiles(files){
+    if(!files||!files.length)return;let success=0;
+    try{ensureAudio();}catch(e){notify(e.message);return;}
+    for(const file of Array.from(files)){
+      if(!file.type.startsWith('audio/')&&!/\.(wav|mp3|m4a|aac|ogg|flac|aiff|aif|opus|webm)$/i.test(file.name)){notify('Skipped '+file.name+': this does not look like an audio file.');continue;}
+      try{const bytes=await file.arrayBuffer();const buffer=await ctx.decodeAudioData(bytes.slice(0));const id=(crypto.randomUUID?crypto.randomUUID():String(Date.now()+Math.random()));const name=file.name.replace(/\.[^.]+$/,'')||'Audio '+(tracks.length+1);tracks.push({id,name,fileName:file.name,buffer,color:palette[tracks.length%palette.length],volume:1,muted:false,canvas:null,gain:null});success++;}
+      catch(e){notify('Could not decode '+file.name+'. Try WAV, MP3, M4A, or another format supported by this browser.');}
+    }
+    duration=totalDuration();position=Math.min(position,duration);zoom=1;render();paintRuler();updateTime();setControls();if(success)notify('Imported '+success+' audio file'+(success===1?'':'s')+'.');$('fileInput').value='';
+  }
+  $('addTop').onclick=$('addAudio').onclick=$('emptyImport').onclick=()=> $('fileInput').click();
+  $('fileInput').addEventListener('change',e=>importFiles(e.target.files));
+  $('playBtn').onclick=$('dockPlay').onclick=play;
+  $('stopBtn').onclick=$('dockStop').onclick=()=>{if(playing)pauseAtCurrent();position=0;updateTime();updatePlayheads();};
+  $('masterGain').oninput=()=>{if(master&&ctx)master.gain.setTargetAtTime(Number($('masterGain').value),ctx.currentTime,.015);};
+  $('zoomIn').onclick=()=>{zoom=Math.min(16,zoom*1.5);paintRuler();$('zoomText').textContent=zoom.toFixed(1)+'×';};
+  $('zoomOut').onclick=()=>{zoom=Math.max(1,zoom/1.5);paintRuler();$('zoomText').textContent=zoom===1?'Fit timeline':zoom.toFixed(1)+'×';};
+  window.addEventListener('resize',()=>{tracks.forEach(drawWave);paintRuler();});
+  document.addEventListener('visibilitychange',()=>{if(document.hidden&&playing){pauseAtCurrent();notify('Playback paused while the tab is in the background.');}});
+  document.addEventListener('keydown',e=>{if(e.target.matches('input,textarea,button'))return;if(e.code==='Space'){e.preventDefault();play();}if(e.key==='Home'){seek(0);}});
+  setControls();updateTime();paintRuler();
+})();
+</script>
+</body>
+</html>
