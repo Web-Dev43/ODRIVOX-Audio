@@ -105,7 +105,7 @@ main{max-width:1500px;margin:auto;padding:22px clamp(12px,2.5vw,30px) 110px}.int
       setControls();tick();
     }catch(e){playing=false;setControls();notify(e.message||'Could not start audio playback.');}
   }
-  function tick(){if(!playing)return;position=Math.min(duration,startOffset+(ctx.currentTime-startedAt));updateTime();updatePlayheads();if(position>=duration){playing=false;stopSources();position=duration;setControls();updateTime();updatePlayheads();return;}raf=requestAnimationFrame(tick);}
+  function tick(){if(!playing)return;position=Math.min(duration,startOffset+(ctx.currentTime-startedAt));updateTime();updatePlayheads();if(position>=duration){playing=false;stopSources();stopSilentAudioSession();position=duration;setControls();updateTime();updatePlayheads();return;}raf=requestAnimationFrame(tick);}
   function pauseAtCurrent(){if(playing){position=Math.min(duration,startOffset+(ctx.currentTime-startedAt));playing=false;stopSources();stopSilentAudioSession();cancelAnimationFrame(raf);}setControls();updateTime();updatePlayheads();}
   async function seek(sec){const wasPlaying=playing;if(wasPlaying)pauseAtCurrent();position=Math.max(0,Math.min(duration,sec));updateTime();updatePlayheads();if(wasPlaying)await play();}
   function removeTrack(id){const t=tracks.find(x=>x.id===id);if(!t)return;if(playing)pauseAtCurrent();tracks=tracks.filter(x=>x.id!==id);duration=totalDuration();position=Math.min(position,duration);render();paintRuler();updateTime();setControls();}
