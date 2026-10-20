@@ -50,10 +50,13 @@ main{max-width:1500px;margin:auto;padding:22px clamp(12px,2.5vw,30px) 110px}.int
 (() => {
   const $ = id => document.getElementById(id);
   const palette = ['#42e8ff','#a66bff','#77f2c1','#ffb86b','#ff7aa8','#9aa9ff'];
-  let ctx = null, master = null, tracks = [], duration = 0, position = 0, zoom = 1, playing = false, startedAt = 0, startOffset = 0, sources = [], raf = 0, toastTimer = 0;
+  let ctx = null, master = null, tracks = [], duration = 0, position = 0, zoom = 1, playing = false, startedAt = 0, startOffset = 0, sources = [], raf = 0, toastTimer = 0, silentAudio = null, silentAudioUrl = null;
   const fmt = n => { n = Math.max(0, Number.isFinite(n) ? n : 0); const m = Math.floor(n/60), s = Math.floor(n%60), ms = Math.floor((n%1)*1000); return String(m).padStart(2,'0')+':'+String(s).padStart(2,'0')+'.'+String(ms).padStart(3,'0'); };
   function notify(message) { $('toast').textContent = message; $('toast').classList.add('show'); clearTimeout(toastTimer); toastTimer=setTimeout(()=>$('toast').classList.remove('show'),3000); }
   function ensureAudio() { if(!ctx) { const AC=window.AudioContext||window.webkitAudioContext; if(!AC) throw new Error('This browser does not support Web Audio. Try a recent version of Safari.'); ctx=new AC(); master=ctx.createGain(); master.gain.value=Number($('masterGain').value); master.connect(ctx.destination); } return ctx; }
+  function makeSilentWavUrl() { const sampleRate=8000, samples=8000, dataSize=samples; const bytes=new ArrayBuffer(44+dataSize); const view=new DataView(bytes); const write=(offset,text)=>{for(let i=0;i<text.length;i++)view.setUint8(offset+i,text.charCodeAt(i));}; write(0,'RIFF');view.setUint32(4,36+dataSize,true);write(8,'WAVE');write(12,'fmt ');view.setUint32(16,16,true);view.setUint16(20,1,true);view.setUint16(22,1,true);view.setUint32(24,sampleRate,true);view.setUint32(28,sampleRate,true);view.setUint16(32,1,true);view.setUint16(34,8,true);write(36,'data');view.setUint32(40,dataSize,true);for(let i=44;i<bytes.byteLength;i++)view.setUint8(i,128);return URL.createObjectURL(new Blob([bytes],{type:'audio/wav'})); }
+  async function startSilentAudioSession() { if(!silentAudio) { silentAudioUrl=makeSilentWavUrl(); silentAudio=new Audio(silentAudioUrl); silentAudio.loop=true; silentAudio.playsInline=true; silentAudio.preload='auto'; } try { await silentAudio.play(); } catch(e) { /* Some browsers do not allow the helper media stream; Web Audio can still play normally. */ } }
+  function stopSilentAudioSession() { if(silentAudio) silentAudio.pause(); }
   function totalDuration() { return Math.max(0,...tracks.map(t=>t.buffer.duration)); }
   function updateTime() { $('timeMain').textContent=fmt(position); $('timeDock').textContent=fmt(position); $('durationDock').textContent=fmt(duration); $('durationLabel').textContent=fmt(duration)+' total'; }
   function setControls() { const has=tracks.length>0; ['playBtn','stopBtn','dockPlay','dockStop','zoomOut','zoomIn'].forEach(id=>$(id).disabled=!has); $('playBtn').innerHTML=playing?'Ⅱ <span class="wide-label">Pause</span>':'▶ <span class="wide-label">Play</span>'; $('dockPlay').textContent=playing?'Ⅱ':'▶'; $('trackCount').textContent=tracks.length+' track'+(tracks.length===1?'':'s'); $('zoomText').textContent=zoom===1?'Fit timeline':zoom.toFixed(1)+'×'; }
@@ -96,14 +99,14 @@ main{max-width:1500px;margin:auto;padding:22px clamp(12px,2.5vw,30px) 110px}.int
   function stopSources() { for(const s of sources){try{s.stop();}catch(e){}try{s.disconnect();}catch(e){}} sources=[]; tracks.forEach(t=>{t.gain=null;}); }
   async function play() {
     if(!tracks.length)return;
-    try{ensureAudio();await ctx.resume();if(playing){position=Math.min(duration,ctx.currentTime-startedAt+startOffset);stopSources();playing=false;cancelAnimationFrame(raf);setControls();updateTime();updatePlayheads();return;}
+    try{ensureAudio();await ctx.resume();if(playing){position=Math.min(duration,ctx.currentTime-startedAt+startOffset);stopSources();playing=false;stopSilentAudioSession();cancelAnimationFrame(raf);setControls();updateTime();updatePlayheads();return;}await startSilentAudioSession();await ctx.resume();
       if(position>=duration)position=0;stopSources();sources=[];startOffset=position;startedAt=ctx.currentTime;playing=true;
       tracks.forEach(t=>{if(position>=t.buffer.duration)return;const src=ctx.createBufferSource();const gain=ctx.createGain();gain.gain.value=t.muted?0:t.volume;src.buffer=t.buffer;src.connect(gain);gain.connect(master);t.gain=gain;src.start(ctx.currentTime,position,Math.max(0,t.buffer.duration-position));sources.push(src);});
       setControls();tick();
     }catch(e){playing=false;setControls();notify(e.message||'Could not start audio playback.');}
   }
   function tick(){if(!playing)return;position=Math.min(duration,startOffset+(ctx.currentTime-startedAt));updateTime();updatePlayheads();if(position>=duration){playing=false;stopSources();position=duration;setControls();updateTime();updatePlayheads();return;}raf=requestAnimationFrame(tick);}
-  function pauseAtCurrent(){if(playing){position=Math.min(duration,startOffset+(ctx.currentTime-startedAt));playing=false;stopSources();cancelAnimationFrame(raf);}setControls();updateTime();updatePlayheads();}
+  function pauseAtCurrent(){if(playing){position=Math.min(duration,startOffset+(ctx.currentTime-startedAt));playing=false;stopSources();stopSilentAudioSession();cancelAnimationFrame(raf);}setControls();updateTime();updatePlayheads();}
   async function seek(sec){const wasPlaying=playing;if(wasPlaying)pauseAtCurrent();position=Math.max(0,Math.min(duration,sec));updateTime();updatePlayheads();if(wasPlaying)await play();}
   function removeTrack(id){const t=tracks.find(x=>x.id===id);if(!t)return;if(playing)pauseAtCurrent();tracks=tracks.filter(x=>x.id!==id);duration=totalDuration();position=Math.min(position,duration);render();paintRuler();updateTime();setControls();}
   async function importFiles(files){
